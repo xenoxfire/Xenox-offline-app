@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# Copyright (c) 2015-2021 the original authors.
+# SPDX-License-Identifier: Apache-2.0
+#
+set -e
+
+APP_HOME=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd -P)
+APP_BASE_NAME=$(basename -- "$0")
+DEFAULT_JVM_OPTS="-Xmx512m -Xms128m"
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+
+die() {
+    echo
+    echo "ERROR: $*"
+    echo
+    exit 1
+}
+
+if [ -z "$JAVA_HOME" ]; then
+    if [ -n "$JRE_HOME" ]; then
+        JAVA_HOME="$JRE_HOME"
+    elif [ -f "/usr/libexec/java_home" ]; then
+        JAVA_HOME="$(/usr/libexec/java_home)"
+    else
+        JAVA_HOME=""
+    fi
+fi
+
+if [ -n "$JAVA_HOME" ]; then
+    JAVACMD="$JAVA_HOME/bin/java"
+else
+    JAVACMD="java"
+fi
+
+command -v "$JAVACMD" >/dev/null 2>&1 || die "JAVA_HOME is not set and no 'java' command could be found."
+
+exec "$JAVACMD" $DEFAULT_JVM_OPTS \
+    "-Dorg.gradle.appname=$APP_BASE_NAME" \
+    -classpath "$CLASSPATH" \
+    org.gradle.wrapper.GradleWrapperMain \
+    "$@"

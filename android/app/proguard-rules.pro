@@ -1,0 +1,3 @@
+-keep class com.xenox.short_app.** { *; }
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable

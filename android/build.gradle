@@ -1,0 +1,31 @@
+buildscript {
+      ext {
+          buildToolsVersion = "34.0.0"
+          minSdkVersion = 23
+          compileSdkVersion = 34
+          targetSdkVersion = 34
+          kotlinVersion = "1.8.22"
+      }
+      repositories {
+          google()
+          mavenCentral()
+      }
+      dependencies {
+          classpath("com.android.tools.build:gradle:8.3.2")
+      }
+  }
+
+  allprojects {
+      repositories {
+          google()
+          mavenCentral()
+      }
+      configurations.all {
+          resolutionStrategy {
+              force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+              force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22"
+              force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
+          }
+      }
+  }
+  

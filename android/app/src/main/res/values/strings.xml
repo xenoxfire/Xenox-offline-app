@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HBX Short</string>
+    <string name="accessibility_service_description">HBX Short ব্যবহার করে username ও password auto-fill করতে সাহায্য করে। কোনো ব্যক্তিগত তথ্য সংগ্রহ করা হয় না।</string>
+</resources>

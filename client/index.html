@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#050505" />
+    
+    <script>
+      (function () {
+        var done = false;
+        window.__xenoxBootOk = function () {
+          done = true;
+          try {
+            localStorage.removeItem("xenox_last_boot_failed");
+            sessionStorage.removeItem("xenox_chunk_retry");
+          } catch (e) {}
+        };
+        function hardReset() {
+          try {
+            localStorage.removeItem("xenox_safe_mode");
+            localStorage.removeItem("xenox_last_boot_failed");
+            sessionStorage.removeItem("xenox_chunk_retry");
+            sessionStorage.removeItem("xenox_safe_reason");
+          } catch (e) {}
+          try {
+            if (window.caches && caches.keys) {
+              caches.keys().then(function (keys) {
+                keys.forEach(function (k) { caches.delete(k); });
+              });
+            }
+          } catch (e) {}
+          location.reload();
+        }
+        window.__xenoxHardReset = hardReset;
+        setTimeout(function () {
+          if (done || document.documentElement.getAttribute("data-xenox-app-ready") === "true") return;
+          var root = document.getElementById("root");
+          if (root) {
+            root.innerHTML = "<div style='min-height:100vh;background:#050505;color:#e5e7eb;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;padding:20px;text-align:center'><div><div style='font-weight:800;margin-bottom:8px'>লোড হতে দেরি হচ্ছে</div><div style='font-size:13px;color:#9ca3af;margin-bottom:14px'>একবার Reload করুন।</div><button onclick='window.__xenoxHardReset()' style='background:#2563eb;color:white;border:0;border-radius:10px;padding:10px 16px;font-weight:700'>Reload</button></div></div>";
+          }
+        }, 20000);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div style="min-height:100vh;background:#050505;color:#e5e7eb;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px">
+        Loading Xenox Short...
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
